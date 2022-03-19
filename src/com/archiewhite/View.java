@@ -43,7 +43,7 @@ public class View {
         JFrame frame = new JFrame(title);
         frame.getContentPane().setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350, 200);
+        frame.setSize(350, 160);
         frame.setVisible(true);
 
         // Create UI elements
