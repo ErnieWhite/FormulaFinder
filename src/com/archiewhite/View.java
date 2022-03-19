@@ -1,20 +1,43 @@
 package com.archiewhite;
 
-import javax.swing.*;
+import javax.swing.GroupLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
 import java.awt.*;
 
+/*
+        +------------------------------+
+        | Formula Finder               |
+        +------------------------------+
+        |            +------+ +------+ |
+        | Base Value |      | |      | |
+        |            +------+ +------+ |
+        |            +------+ +------+ |
+        | Unit Price |      | |      | |
+        |            +------+ +------+ |
+        |            +------+ +------+ |
+        | Decimals   |      | |      | |
+        |            +------+ +------+ |
+        |                     +------+ |
+        |                     |      | |
+        |                     +------+ |
+        +------------------------------+
+*/
 
 public class View {
     private JFrame frame;
     private JLabel basisValueLabel;
     private JLabel unitPriceLabel;
-    private JLabel formulaTypeLabel;
-    private JLabel formulaLabel;
+    private JLabel decimalPlacesLabel;
     private JTextField basisValueTextfield;
     private JTextField unitPriceTextfield;
-    private JTextField formulaTextfield;
-    private JComboBox formulaTypeCombobox;
-    private JButton copyButton;
+    private JTextField multiplierFormulaTextfield;
+    private JTextField discountFormulaTextfield;
+    private JTextField markupFormulaTextfield;
+    private JTextField grossProfitFormulaTextfield;
+    private JComboBox<String> decimalPlacesCombobox;
 
     public View (String title) {
         JFrame frame = new JFrame(title);
@@ -25,13 +48,15 @@ public class View {
         // Create UI elements
         basisValueLabel = new JLabel("Basis Value");
         unitPriceLabel = new JLabel("Unit Price");
-        formulaLabel = new JLabel("Formula Type");
+        decimalPlacesLabel = new JLabel("Decimals");
         basisValueTextfield = new JTextField();
         unitPriceTextfield = new JTextField();
-        String formulaTypes[] = {"*", "X", "D", "-", "GP"};
-        formulaTypeCombobox = new JComboBox<>(formulaTypes);
-        formulaTextfield = new JTextField();
-        copyButton = new JButton("Copy");
+        String[] decimalPlaces = {"Auto", "0", "1", "2", "3", "4", "5", "6"};
+        decimalPlacesCombobox = new JComboBox<>(decimalPlaces);
+        multiplierFormulaTextfield = new JTextField();
+        discountFormulaTextfield = new JTextField();
+        markupFormulaTextfield = new JTextField();
+        grossProfitFormulaTextfield = new JTextField();
 
         // Add UI elements to frame
         GroupLayout layout = new GroupLayout(frame.getContentPane());
@@ -42,16 +67,35 @@ public class View {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(basisValueLabel)
                         .addComponent(unitPriceLabel)
-                        .addComponent(formulaTypeLabel)
-                        .addComponent(formulaLabel)
-                        .addComponent(copyButton))
+                        .addComponent(decimalPlacesLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(basisValueTextfield)
                         .addComponent(unitPriceTextfield)
-                        .addComponent(formulaTypeCombobox)
-                        .addComponent(formulaTextfield))
+                        .addComponent(decimalPlacesCombobox))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(multiplierFormulaTextfield)
+                        .addComponent(discountFormulaTextfield)
+                        .addComponent(markupFormulaTextfield)
+                        .addComponent(grossProfitFormulaTextfield))
 
         );
+
+        layout.setVerticalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(basisValueLabel)
+                        .addComponent(basisValueTextfield)
+                        .addComponent(multiplierFormulaTextfield))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(unitPriceLabel)
+                        .addComponent(unitPriceTextfield)
+                        .addComponent(discountFormulaTextfield))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(decimalPlacesLabel)
+                        .addComponent(decimalPlacesCombobox)
+                        .addComponent(markupFormulaTextfield))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(grossProfitFormulaTextfield)));
+
         frame.getContentPane().setLayout(layout);
 
     }
@@ -62,10 +106,6 @@ public class View {
 
     public void setFrame(JFrame frame) {
         this.frame = frame;
-    }
-
-    public JLabel getFormulaLabel() {
-        return formulaLabel;
     }
 
     public JLabel getBasisValueLabel() {
@@ -84,18 +124,6 @@ public class View {
         this.unitPriceLabel = unitPriceLabel;
     }
 
-    public JLabel getFormulaTypeLabel() {
-        return formulaTypeLabel;
-    }
-
-    public void setFormulaTypeLabel(JLabel formulaTypeLabel) {
-        this.formulaTypeLabel = formulaTypeLabel;
-    }
-
-    public void setFormulaLabel(JLabel formulaLabel) {
-        this.formulaLabel = formulaLabel;
-    }
-
     public JTextField getBasisValueTextfield() {
         return basisValueTextfield;
     }
@@ -112,27 +140,52 @@ public class View {
         this.unitPriceTextfield = unitPriceTextfield;
     }
 
-    public JComboBox<String> getFormulaTypeCombobox() {
-        return formulaTypeCombobox;
+    public JTextField getMultiplierFormulaTextfield() {
+        return multiplierFormulaTextfield;
     }
 
-    public void setFormulaTypeCombobox(JComboBox formulaTypeCombobox) {
-        this.formulaTypeCombobox = formulaTypeCombobox;
+    public void setMultiplierFormulaTextfield(JTextField multiplierFormulaTextfield) {
+        this.multiplierFormulaTextfield = multiplierFormulaTextfield;
     }
 
-    public JButton getCopyButton() {
-        return copyButton;
+    public JTextField getDiscountFormulaTextfield() {
+        return discountFormulaTextfield;
     }
 
-    public void setCopyButton(JButton copyButton) {
-        this.copyButton = copyButton;
+    public void setDiscountFormulaTextfield(JTextField discountFormulaTextfield) {
+        this.discountFormulaTextfield = discountFormulaTextfield;
     }
 
-    public JTextField getFormulaTextfield() {
-        return formulaTextfield;
+    public JTextField getMarkupFormulaTextfield() {
+        return markupFormulaTextfield;
     }
 
-    public void setFormulaTextfield(JTextField formulaTextfield) {
-        this.formulaTextfield = formulaTextfield;
+    public void setMarkupFormulaTextfield(JTextField markupFormulaTextfield) {
+        this.markupFormulaTextfield = markupFormulaTextfield;
     }
+
+    public JTextField getGrossProfitFormulaTextfield() {
+        return grossProfitFormulaTextfield;
+    }
+
+    public void setGrossProfitFormulaTextfield(JTextField grossProfitFormulaTextfield) {
+        this.grossProfitFormulaTextfield = grossProfitFormulaTextfield;
+    }
+
+    public JLabel getDecimalPlacesLabel() {
+        return decimalPlacesLabel;
+    }
+
+    public void setDecimalPlacesLabel(JLabel decimalPlacesLabel) {
+        this.decimalPlacesLabel = decimalPlacesLabel;
+    }
+
+    public JComboBox<String> getDecimalPlacesCombobox() {
+        return decimalPlacesCombobox;
+    }
+
+    public void setDecimalPlacesCombobox(JComboBox<String> decimalPlacesCombobox) {
+        this.decimalPlacesCombobox = decimalPlacesCombobox;
+    }
+
 }
